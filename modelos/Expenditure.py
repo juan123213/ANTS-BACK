@@ -1,10 +1,11 @@
 from pydantic import BaseModel
 from datetime import date
 
+from uuid import UUID
+
 class Expenditure(BaseModel):
-    description: str
+    id: UUID
     amount: float
-    date: date
-    
-    
+    description: str
+    date:date
     
