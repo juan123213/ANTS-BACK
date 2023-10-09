@@ -39,7 +39,7 @@ Si al ejecutar el local host le sale un "detail not found" simplemente en la url
 ## Authors
 
 - [Juan Andrés Giraldo Arias](https://github.com/juan123213)
-- [Cristian Camilo Gil](https://github.com/juan123213)
-- [Sergio Andrés Cardona](https://github.com/juan123213)
-- [Samir Gónzales](https://github.com/juan123213)
+- [Cristian Camilo Gil](https://github.com/CristianGil-1002594433)
+- [Sergio Andrés Cardona](https://github.com/scardona55)
+- [Samir Gónzales](https://github.com/Erasux)
 
