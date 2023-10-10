@@ -17,10 +17,10 @@ firebase_app = firebase_admin.initialize_app(cred, {
 
 app = FastAPI()
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+#routers
+app.include_router(Users.router)
 
-app = FastAPI()
+
 
 # Configura CORS para permitir solicitudes desde la URL de tu aplicación Expo.js
 app.add_middleware(
@@ -32,5 +32,4 @@ app.add_middleware(
 )
 
 
-#routers
-app.include_router(Users.router)
+

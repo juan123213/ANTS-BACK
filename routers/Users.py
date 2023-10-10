@@ -1,21 +1,27 @@
 from modelos.User import User
 from fastapi import APIRouter
 from firebase_admin import db
+from uuid import UUID, uuid4
+
 
 
 router = APIRouter()
 
 @router.post("/usuario/")
-def crear_usuario(user: User):
-    
-    user.id = str(user.id)
+async def crear_usuario(user: User):
+    # Genera un nuevo UUID para el usuario
+    user_id = uuid4()
+
     # Convierte el objeto Usuario a un diccionario
     usuario_dict = user.dict()
+    
+    # Asigna el ID generado al campo 'id' del diccionario del usuario
+    usuario_dict["id"] = str(user_id)
     
     ref= db.reference('Usuario')
     # Envía el usuario a la base de datos de Firebase bajo el nodo "usuarios"
     ref.push(usuario_dict)
-    
+    return {"message": "Usuario creado exitosamente"}
 
 @router.get("/usuarios/")
 async def obtener_usuarios():
