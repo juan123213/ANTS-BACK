@@ -3,6 +3,7 @@ import firebase_admin
 from firebase_admin import credentials
 from routers import Usuario
 from routers import Gasto
+from routers import Presupuesto
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -21,6 +22,7 @@ app = FastAPI()
 #routers
 app.include_router(Usuario.router)
 app.include_router(Gasto.router)
+app.include_router(Presupuesto.router)
 
 # Configura CORS para permitir solicitudes desde la URL de tu aplicación Expo.js
 app.add_middleware(
