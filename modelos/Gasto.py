@@ -7,6 +7,5 @@ class Gasto(BaseModel):
     cantidad: int
     descripcion: str
     id_usuario: str
-    fecha:Optional[date]
-    
+    fecha: Optional[str]  # Nuevo campo para el mes y año actual
 

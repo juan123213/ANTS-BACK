@@ -1,3 +1,4 @@
+from fastapi.testclient import TestClient
 from fastapi import FastAPI
 import firebase_admin
 from firebase_admin import credentials
@@ -19,7 +20,19 @@ firebase_app = firebase_admin.initialize_app(cred, {
 
 app = FastAPI()
 
-#routers
+client = TestClient(app)
+
+def test_crear_gasto():
+    response = client.post("/gasto/", json={
+        "cantidad": 100,
+        "descripcion": "Prueba",
+        "id_usuario": "usuario_test",
+        # No incluyes 'id' ni 'mes_anio_actual' ya que se generan automáticamente
+    })
+    assert response.status_code == 200
+    assert response.json()["message"] == "Gasto creado exitosamente"
+    
+    
 app.include_router(Usuario.router)
 app.include_router(Gasto.router)
 app.include_router(Presupuesto.router)
@@ -32,8 +45,4 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-
-
 
