@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from firebase_admin import db
 from uuid import uuid4
 from datetime import date
+from datetime import datetime
 
 router = APIRouter()
 
@@ -16,9 +17,7 @@ async def crear_Presupuesto(presupuesto: Presupuesto):
     presupuesto_id = uuid4()
     presupuesto.id = str(presupuesto_id)
 
-    # Convierte la fecha a string si está presente
-    if presupuesto.fecha:
-        presupuesto.fecha = fecha_a_string(presupuesto.fecha)
+
 
     presupuesto_dict = presupuesto.dict()    
     
