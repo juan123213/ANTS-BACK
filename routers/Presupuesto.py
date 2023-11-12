@@ -4,18 +4,22 @@ from firebase_admin import db
 from uuid import uuid4
 from datetime import date
 from datetime import datetime
+from fastapi import HTTPException
 
 router = APIRouter()
 
 @router.post("/presupuesto/")
 async def crear_Presupuesto(presupuesto: Presupuesto):
+    # Verificar que el valor del presupuesto es diferente de 0
+    if presupuesto.objetivo == 0:
+        raise HTTPException(status_code=400, detail="El valor del presupuesto no puede ser 0")
+
     presupuesto_id = uuid4()
     presupuesto.id = str(presupuesto_id)
 
     presupuesto_dict = presupuesto.dict()    
     
     ref = db.reference('Presupuesto')
-    # Envía el Presupuesto a la base de datos de Firebase bajo el nodo "Presupuestos"
     ref.push(presupuesto_dict)
     return {"message": "Presupuesto creado exitosamente"}
 
@@ -35,6 +39,6 @@ async def obtenerPresupuestos(fecha: str):
         if presupuestos_mes:
             return presupuestos_mes
         else:
-            return {"message": f"No se encontraron presupuestos para el mes {fecha}"}
+            return []
     else:
-        return {"message": "No hay presupuestos registrados"}
+        return []
