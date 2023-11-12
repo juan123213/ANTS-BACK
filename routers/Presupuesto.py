@@ -31,4 +31,7 @@ async def obtenerPresupuestos():
     ref = db.reference('Presupuesto')
     return ref.get()
 
-
+@router.get("/presupuestos/{mes_anio}")
+async def obtenerPresupuestos(mes_anio: str):    
+    ref = db.reference('Presupuesto')
+    return ref.get()

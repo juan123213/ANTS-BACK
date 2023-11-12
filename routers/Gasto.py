@@ -22,7 +22,8 @@ async def crear_gasto(gasto: Gasto):
     ref.push(gasto_dict)
     return {"message": "Gasto creado exitosamente"}
 
-@router.get("/gastos/")
-async def obtener_gastos():    
+
+@router.get("/gastos/{mes_anio}")
+async def obtener_gastos(mes_anio: str):    
     ref = db.reference('Gasto')
     return ref.get()
