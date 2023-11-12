@@ -20,6 +20,11 @@ async def crear_Presupuesto(presupuesto: Presupuesto):
     presupuesto_dict = presupuesto.dict()    
     
     ref = db.reference('Presupuesto')
+    todos_presupuestos = ref.get() or {}
+    
+    if any(p.get("fecha") == presupuesto.fecha for p in todos_presupuestos.values()):
+        raise HTTPException(status_code=400, detail=f"Ya existe un presupuesto para el mes {presupuesto.fecha}")
+
     ref.push(presupuesto_dict)
     return {"message": "Presupuesto creado exitosamente"}
 
