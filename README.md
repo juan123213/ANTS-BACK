@@ -18,6 +18,10 @@ Comandos para ejecutar la aplicación:
   pip install firebase-admin
 ```
 
+```bash
+pip install -r requirements.txt
+```
+
 Ejecutar la aplicación:
 
 ```bash
