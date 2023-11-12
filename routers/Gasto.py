@@ -23,7 +23,17 @@ async def crear_gasto(gasto: Gasto):
     return {"message": "Gasto creado exitosamente"}
 
 
-@router.get("/gastos/{mes_anio}")
-async def obtener_gastos(mes_anio: str):    
+@router.get("/gastos/{fecha}")
+async def obtener_gastos(fecha: str):    
+    # Convertir la fecha de string a datetime
+    fecha = datetime.strptime(fecha, "%Y-%m").date()
+
     ref = db.reference('Gasto')
-    return ref.get()
+    gastos = ref.get()
+    
+    if gastos:
+        fecha_str = fecha.strftime("%Y-%m")
+        gastos_mes = [g for g in gastos.values() if g.get("fecha") and g["fecha"].startswith(fecha_str)]
+        return gastos_mes
+    else:
+        return {"message": "No hay gastos registrados"}

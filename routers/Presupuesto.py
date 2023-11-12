@@ -7,17 +7,10 @@ from datetime import datetime
 
 router = APIRouter()
 
-def fecha_a_string(fecha: date) -> str:
-    """Convierte una fecha en un formato de string."""
-    return fecha.strftime("%Y-%m-%d") if fecha else None
-
 @router.post("/presupuesto/")
 async def crear_Presupuesto(presupuesto: Presupuesto):
-    
     presupuesto_id = uuid4()
     presupuesto.id = str(presupuesto_id)
-
-
 
     presupuesto_dict = presupuesto.dict()    
     
@@ -31,7 +24,17 @@ async def obtenerPresupuestos():
     ref = db.reference('Presupuesto')
     return ref.get()
 
-@router.get("/presupuestos/{mes_anio}")
-async def obtenerPresupuestos(mes_anio: str):    
+@router.get("/presupuestos/{fecha}")
+async def obtenerPresupuestos(fecha: str):    
     ref = db.reference('Presupuesto')
-    return ref.get()
+    presupuestos = ref.get()
+    
+    if presupuestos:
+        presupuestos_mes = [p for p in presupuestos.values() if p["fecha"] == fecha]
+        
+        if presupuestos_mes:
+            return presupuestos_mes
+        else:
+            return {"message": f"No se encontraron presupuestos para el mes {fecha}"}
+    else:
+        return {"message": "No hay presupuestos registrados"}
